@@ -45,11 +45,21 @@ Gif de la funcionalidad de iniciar sesión con cuentas ya creadas en archivo lla
 
 ### Resultado final ⌨️
 
-_Explica que verifican estas pruebas y por qué_
+El resultado final lo podemos apreciar en el siguiente link adicional se muestra un pequeño gif de como quedo la página.
+
+#Adicional si se quiere ingresar sesión usar una de las cuentas que se encuentra en data.js en la carpeta src.
 
 ```
-Da un ejemplo
+https://prueba-tecnica-ols.netlify.app
 ```
+
+
+```
+Gif final
+```
+
+![chrome-capture](https://user-images.githubusercontent.com/50644185/126083400-a8a4fd0a-fa2b-43e0-b500-a2f9014d4386.gif)
+
 
 
 ## Construido con 🛠️
