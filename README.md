@@ -19,6 +19,22 @@ Gif de la funcionalidad de eliminar
 
 
 
+```
+Gif de la funcionalidad de crear
+```
+
+![chrome-capture2](https://user-images.githubusercontent.com/50644185/126078069-f54ca682-e624-442a-a855-7a7c28bd2a5a.gif)
+
+
+```
+Gif de la funcionalidad de Editar![chrome-capture2](https://user-images.githubusercontent.com/50644185/126078073-d1aa4b4e-fe4c-4dbb-bfc9-c2291bb1bfb8.gif)
+
+```
+
+![chrome-capture](https://user-images.githubusercontent.com/50644185/126078078-366cabe1-2764-43de-aeb4-a117f8f42c85.gif)
+
+
+
 ### Resultado final ⌨️
 
 _Explica que verifican estas pruebas y por qué_
