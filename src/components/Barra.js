@@ -22,6 +22,9 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import MoodIcon from '@material-ui/icons/Mood';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Link } from 'react-router-dom';
+
+// En esta sección se hará la barra de navegación horizontal y la barra lateral, para que se vea más estético usamos estilos con transiciones
 
 const drawerWidth = 260;
 const drawerWidth2 = 73;
@@ -105,12 +108,12 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
-    listItemText:{
-        fontSize:'1.5em',//Insert your required size
-      },
-      grow: {
+    listItemText: {
+        fontSize: '1.5em',//Insert your required size
+    },
+    grow: {
         flexGrow: 1,
-      },
+    },
 }));
 
 export default function MiniDrawer() {
@@ -118,6 +121,7 @@ export default function MiniDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
+    //hacemos 2 handler para cuando la barra vertical se cierra o se abre.
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -129,6 +133,7 @@ export default function MiniDrawer() {
     return (
         <div className={classes.root}>
             <CssBaseline />
+            {/* inicio del Navbar */}
             <AppBar style={{ background: '#ffffff' }}
                 position="fixed"
                 className={clsx(classes.appBar, {
@@ -144,21 +149,24 @@ export default function MiniDrawer() {
                         edge="start"
                         className={clsx(classes.menuButton)}
                     >
-                        <MenuIcon fontSize="large"/>
+                        <MenuIcon fontSize="large" />
                     </IconButton>
                     <Typography variant="h6" noWrap style={{ color: '#003cb0' }}>
                         Prueba Front-end
                     </Typography>
                     <div className={classes.grow} />
                     <AccountCircleIcon style={{ color: 'black', marginLeft: "1em" }} fontSize="large" />
-                    <Typography variant="h7" noWrap style={{ color: 'black',marginLeft: "1em", marginRight: "2em" }}>
-                    Andrés Felipe Garcia Castro
+                    <Typography variant="h7" noWrap style={{ color: 'black', marginLeft: "1em", marginRight: "2em" }}>
+                        Andrés Felipe Garcia Castro
                     </Typography>
                     <IconButton>
-                    <ExitToAppIcon style={{ color: '#003cb0' }} />
+                        <Link to="/">
+                            <ExitToAppIcon style={{ color: '#003cb0' }} />
+                        </Link>
                     </IconButton>
                 </Toolbar>
             </AppBar>
+            {/* Fin del navbaar e inicio de la barra lateral */}
             <Drawer
                 style={{ background: '#003cb0' }}
                 variant="permanent"
@@ -177,8 +185,8 @@ export default function MiniDrawer() {
             >
                 <List>
                     <ListItem button key={"OLSoftware"}>
-                        <ListItemIcon><MoodIcon style={{ color: '#ffffff' }}/></ListItemIcon>
-                        <ListItemText primary={"OLSoftware"} classes={{primary:classes.listItemText}} />
+                        <ListItemIcon><MoodIcon style={{ color: '#ffffff' }} /></ListItemIcon>
+                        <ListItemText primary={"OLSoftware"} classes={{ primary: classes.listItemText }} />
                         <ListItemIcon><IconButton onClick={handleDrawerClose} style={{ color: '#ffffff' }}>
                             <ChevronLeftIcon />
                         </IconButton></ListItemIcon >
@@ -213,9 +221,10 @@ export default function MiniDrawer() {
                     </ListItem>
                 </List>
             </Drawer>
+            {/** fin de la barra lateral  y llamado del componente que tiene todo el contenido, como es la tabla con la información de usuarios y filtrar.*/}
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                <VerticalBar/>
+                <VerticalBar />
             </main>
         </div>
     );

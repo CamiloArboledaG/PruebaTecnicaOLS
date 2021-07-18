@@ -19,6 +19,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+
+// creamos columns para que al momento de crear la tabla sabemos como distribuir las columnas con sus respectivos nombres, id y minimo de width
+
+
 const columns = [
   { id: 'name', label: 'Nombres', minWidth: 170 },
   { id: 'lastname', label: 'Apellidos', minWidth: 170 },
@@ -29,6 +33,8 @@ const columns = [
   { id: 'mail', label: 'Correo electrónico', minWidth: 100 },
   { id: 'action', label: 'Acción', minWidth: 100 },
 ];
+
+// Parte de css realizada en JS
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,58 +68,14 @@ const useStyles = makeStyles((theme) => ({
     margin: "1em"
   }
 }));
-{/*function modaleditar(){
-  return(
-    <Dialog
-                  open={open2}
-                  onClose={handleClose2}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title" style={{ margin: "2em" }}>{"Editar Usuario"}</DialogTitle>
-                  <DialogContent>
-                    <form className={classes.modalcrear} noValidate autoComplete="off" style={{ margin: "2em" }}>
-                      <Grid container>
-                        <Grid item xs={12} md={6}>
-                          <TextField size="small" name="name" id="name2" onChange={handleChange} value={state.form.name} label="Nombres" variant="outlined" className={classes.fieldmodalcrear} />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <TextField size="small" name="lastname" id="lastname2" onChange={handleChange} value={state.form.lastname} label="Apellidos" variant="outlined" className={classes.fieldmodalcrear} />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <TextField size="small" name="identi" id="identi2" onChange={handleChange} value={state.form.identi} label="Identifiación" variant="outlined" className={classes.fieldmodalcrear} />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <TextField size="small" name="RA" id="RA2" onChange={handleChange} value={state.form.RA} label="Rol asociado" variant="outlined" className={classes.fieldmodalcrear} />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <TextField size="small" name="state" id="state2" onChange={handleChange} value={state.form.state} label="Estado" variant="outlined" className={classes.fieldmodalcrear} />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <TextField size="small" name="contrasena" id="contrasena2" onChange={handleChange} value={state.form.contrasena} label="Contraseña" variant="outlined" className={classes.fieldmodalcrear} />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <TextField size="small" name="phone" id="phone2" onChange={handleChange} value={state.form.phone} label="Teléfono" variant="outlined" className={classes.fieldmodalcrear} />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <TextField size="small" name="mail" id="mail2" onChange={handleChange} value={state.form.mail} label="Correo electrónico" variant="outlined" className={classes.fieldmodalcrear} />
-                        </Grid>
-                      </Grid>
-                    </form>
-                  </DialogContent>
-                  <Grid container style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Button variant="contained" color="primary" autoFocus style={{ margin: "2em", backgroundColor: "green" }}>
-                      Aceptar
-                    </Button>
-                    <Button variant="outlined" onClick={handleClose2} color="primary" style={{ margin: "2em", color: "green", borderColor: "green" }}>
-                      Cancelar
-                    </Button>
-                  </Grid>
-                </Dialog>
-  )
-}
-*/}
+
+
+
 export default function Contenido() {
+
+  //creación de 2 const, state y state2, state lo usamos para eliminar y crear un nuevo usuario, state2 para editar a un usuario existente
+  // esto lo hago ya que cuando usaba solamente state para las 3 funcionalidades habia un fallo al llamar en los text field los respectivos campos de los usuarios.
+
   const [state, setState] = useState({
     usuarios: usuarios,
     form: {
@@ -143,16 +105,19 @@ export default function Contenido() {
     }
   })
 
+  //classes para el uso de estilos, page y rowsPerPage es para el uso de la tabla donde va toda la información, open y open2 lo usamos para los respectivos modal
+  // open es para el modal de crear un nuevo usuario y open2 para el modal de editar un usuario existente
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
 
+
+  //handle close y open, 1 y 2 para cerrar y abrir los modals
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -165,11 +130,11 @@ export default function Contenido() {
     setOpen2(false);
   };
 
-
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  //hacemos el handlechange para que al momento de escribir en los campos de textfield se estuviera guardando la información
 
   const handleChange = (event) => {
     setState({
@@ -193,7 +158,7 @@ export default function Contenido() {
     setPage(0);
   };
 
-
+  //arrowfunction para eliminar un dato haciendo un map para recorrer los usuarios y si el id es igual al id que llega se hace un splice
   const eliminar = (dato) => {
     var contador = 0;
     var arreglo = usuarios;
@@ -207,6 +172,8 @@ export default function Contenido() {
     setState({ usuarios: arreglo })
   }
 
+    //arrowfunction para insertar un nuevo usuario, usando el state form creado con anterioridad, se coloca al final de la lista con un push y su respectivo id.
+
   const inserter = () => {
     var valorNuevo = { ...state.form };
     valorNuevo.id = usuarios.length + 1;
@@ -215,18 +182,8 @@ export default function Contenido() {
     setState({ usuarios: lista });
     setOpen(false);
   }
-  {/*const crear = (dato) => {
-    var contador = 0;
-    var arreglo = state.usuarios;
-    arreglo.map((usuario) => {
-      if (dato.id == usuario.id) {
-        arreglo.splice(contador, 1);
-      }
-      contador++;
-    })
-  console.log(arreglo)
-  setState({ usuarios: arreglo })
-}*/}
+
+  // arrowfunction para editar a un usuario ya existente, haciendo uso de un map para recorrer todos los ususarios hasta encontrar el del dato enviado.
 
   const editar = (dato) => {
     var contador = 0;
@@ -260,7 +217,7 @@ export default function Contenido() {
                   <Typography variant="h6" noWrap style={{ color: '#003cb0' }}> Usuarios existentes </Typography>
                 </div>
                 <Button variant="contained" color="primary" style={{ marginLeft: "1em", marginRight: "1em", paddingLeft: "2em", paddingRight: "2em" }} onClick={handleClickOpen}>Crear</Button>
-
+                {/* dialog que se muestra en pantalla como modal al momento de crear un usuario nuevo */}
                 <Dialog
                   open={open}
                   onClose={handleClose}
@@ -307,10 +264,12 @@ export default function Contenido() {
                     </Button>
                   </Grid>
                 </Dialog>
+                {/* fin del modal para crear un nuevo usuario */}
 
 
               </div>
             </Grid>
+            {/* inicio de la tabla que va a contener todos los usuarios y los muestra de forma organizada. */}
             <Grid item xs={12}>
               <Paper className={classes.root2}>
                 <TableContainer className={classes.container}>
@@ -328,6 +287,7 @@ export default function Contenido() {
                       </TableRow>
                     </TableHead>
                     <TableBody >
+                      {/* se escribe el body de la tabla haciendo un map de los usuarios y luego un map de las columnas para ir escribiendo sección por sección */}
                       {
                         usuarios.map(usuario => {
                           return (
@@ -346,6 +306,7 @@ export default function Contenido() {
                                     <TableCell key={column.id} align={column.align} style={{ display: "flex" }}>
                                       <IconButton>
                                         <EditIcon fontSize="small" style={{ color: '#003cb0' }} onClick={() => handleClickOpen2(usuario)} />
+                                        {/* si se presiona el edit icon se abre el siguiente modal para editar la información del usuario existente */}
                                         <Dialog
                                           open={open2}
                                           onClose={handleClose2}
@@ -392,9 +353,11 @@ export default function Contenido() {
                                             </Button>
                                           </Grid>
                                         </Dialog>
+                                        {/* fin del modal para editar al usuario seleccionado. */}
                                       </IconButton>
                                       <IconButton>
                                         <DeleteIcon fontSize="small" onClick={() => eliminar(usuario)} />
+                                        {/* botón para eliminar al usuario */}
                                       </IconButton>
                                     </TableCell>
                                   );
@@ -418,12 +381,13 @@ export default function Contenido() {
                 />
               </Paper>
             </Grid>
+            {/* fin de la tabla. */}
           </Grid>
 
 
         </Grid>
 
-
+                        {/*  Inicio del componente para filtrar la búsqueda con sus parámetros respectivos */}
         <Grid item xs={12} md={2} className={classes.busqueda}  >
           <Grid container>
 
@@ -473,7 +437,7 @@ export default function Contenido() {
                   <Button variant="outlined" size="small" onClick={handleClose} color="primary" style={{ marginLeft: "5px", color: "green", borderColor: "green" }}>
                     Cancelar
                   </Button>
-
+                      {/* Fin de todos los textfield y botones del componente de filtrar y fin de este componente total llamado contenido */}
                 </Grid>
               </Grid>
             </Grid>
