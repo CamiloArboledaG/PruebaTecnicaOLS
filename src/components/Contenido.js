@@ -16,9 +16,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import usuarios from '../data';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const columns = [
@@ -76,6 +74,7 @@ export default function Contenido() {
       identi: '',
       RA: '',
       state: '',
+      contrasena: '',
       phone: '',
       mail: '',
     }
@@ -85,6 +84,7 @@ export default function Contenido() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -93,30 +93,57 @@ export default function Contenido() {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
 
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  const handleChange = (event) => {
+    setState({
+      form: {
+        ...state.form,
+        [event.target.name]: event.target.value,
+      }
+    });
+  }
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+
   const eliminar = (dato) => {
-      var contador = 0;
-      var arreglo = state.usuarios;
-      arreglo.map((usuario) => {
-        if (dato.id == usuario.id) {
-          arreglo.splice(contador, 1);
-        }
-        contador++;
-      })
+    var contador = 0;
+    var arreglo = state.usuarios;
+    arreglo.map((usuario) => {
+      if (dato.id == usuario.id) {
+        arreglo.splice(contador, 1);
+      }
+      contador++;
+    })
     console.log(arreglo)
     setState({ usuarios: arreglo })
   }
-  const crear = (dato) => {
+
+  const inserter = () => {
+    var valorNuevo = { ...state.form };
+    valorNuevo.id = usuarios.length + 1;
+    var lista = usuarios;
+    lista.push(valorNuevo);
+    setState({ usuarios: lista });
+    setOpen(false);
+  }
+  {/*const crear = (dato) => {
     var contador = 0;
     var arreglo = state.usuarios;
     arreglo.map((usuario) => {
@@ -127,7 +154,7 @@ export default function Contenido() {
     })
   console.log(arreglo)
   setState({ usuarios: arreglo })
-}
+}*/}
 
 
   return (
@@ -149,44 +176,44 @@ export default function Contenido() {
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
                 >
-                  <DialogTitle id="alert-dialog-title" style={{ margin: "2em"}}>{"Agregar nuevo usuario"}</DialogTitle>
+                  <DialogTitle id="alert-dialog-title" style={{ margin: "2em" }}>{"Agregar nuevo usuario"}</DialogTitle>
                   <DialogContent>
-                    <form className={classes.modalcrear} noValidate autoComplete="off" style={{ margin: "2em"}}>
+                    <form className={classes.modalcrear} noValidate autoComplete="off" style={{ margin: "2em" }}>
                       <Grid container>
                         <Grid item xs={12} md={6}>
-                          <TextField size="small" id="Nombres" label="Nombres" variant="outlined" className={classes.fieldmodalcrear} />
+                          <TextField size="small" name="name" id="name" onChange={handleChange} label="Nombres" variant="outlined" className={classes.fieldmodalcrear} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <TextField size="small" id="Apellidos" label="Apellidos" variant="outlined" className={classes.fieldmodalcrear} />
+                          <TextField size="small" name="lastname" id="lastname" onChange={handleChange} label="Apellidos" variant="outlined" className={classes.fieldmodalcrear} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <TextField size="small" id="Identificación (C.C)" label="Identificación (C.C)" variant="outlined" className={classes.fieldmodalcrear} />
+                          <TextField size="small" name="identi" id="identi" onChange={handleChange} label="Identifiación" variant="outlined" className={classes.fieldmodalcrear} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <TextField size="small" id="Rol asociado" label="Rol asociado" variant="outlined" className={classes.fieldmodalcrear} />
+                          <TextField size="small" name="RA" id="RA" onChange={handleChange} label="Rol asociado" variant="outlined" className={classes.fieldmodalcrear} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <TextField size="small" id="Estado" label="Estado" variant="outlined" className={classes.fieldmodalcrear} />
+                          <TextField size="small" name="state" id="state" onChange={handleChange} label="Estado" variant="outlined" className={classes.fieldmodalcrear} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <TextField size="small" id="Contraseña" label="Contraseña" variant="outlined" className={classes.fieldmodalcrear} />
+                          <TextField size="small" name="contrasena" id="contrasena" onChange={handleChange} label="Contraseña" variant="outlined" className={classes.fieldmodalcrear} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <TextField size="small" id="Teléfono" label="Teléfono" variant="outlined" className={classes.fieldmodalcrear} />
+                          <TextField size="small" name="phone" id="phone" onChange={handleChange} label="Teléfono" variant="outlined" className={classes.fieldmodalcrear} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <TextField size="small" id="Correo electrónico" label="Correo electrónico" variant="outlined" className={classes.fieldmodalcrear} />
+                          <TextField size="small" name="mail" id="mail" onChange={handleChange} label="Correo electrónico" variant="outlined" className={classes.fieldmodalcrear} />
                         </Grid>
                       </Grid>
                     </form>
                   </DialogContent>
-                  <Grid container style={{ display: "flex", alignItems: "center", justifyContent: "center"}}>
-                      <Button variant="contained"  color="primary" autoFocus style={{ margin: "2em", backgroundColor: "green"}}>
-                        Aceptar
-                      </Button>
-                      <Button variant="outlined" onClick={handleClose} color="primary" style={{ margin: "2em", color:"green", borderColor:"green"}}>
-                        Cancelar
-                      </Button>
+                  <Grid container style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <Button variant="contained" color="primary" onClick={() => inserter()} autoFocus style={{ margin: "2em", backgroundColor: "green" }}>
+                      Aceptar
+                    </Button>
+                    <Button variant="outlined" onClick={handleClose} color="primary" style={{ margin: "2em", color: "green", borderColor: "green" }}>
+                      Cancelar
+                    </Button>
                   </Grid>
                 </Dialog>
 
@@ -211,7 +238,7 @@ export default function Contenido() {
                     </TableHead>
                     <TableBody >
                       {
-                        state.usuarios.map(usuario => {
+                        usuarios.map(usuario => {
                           return (
                             <TableRow hover role="checkbox" tabIndex={-1} key={usuario.code}>
                               {columns.map((column) => {
@@ -226,7 +253,55 @@ export default function Contenido() {
                                   return (
                                     <TableCell key={column.id} align={column.align} style={{ display: "flex" }}>
                                       <IconButton>
-                                        <EditIcon fontSize="small" style={{ color: '#003cb0' }} />
+                                        <EditIcon fontSize="small" style={{ color: '#003cb0' }} onClick={handleClickOpen} />
+                                        <Dialog
+                                          open={open2}
+                                          onClose={handleClose2}
+                                          aria-labelledby="alert-dialog-title"
+                                          aria-describedby="alert-dialog-description"
+                                        >
+                                          <DialogTitle id="alert-dialog-title" style={{ margin: "2em" }}>{"Editar Usuario"}</DialogTitle>
+                                          <DialogContent>
+                                            <form className={classes.modalcrear} noValidate autoComplete="off" style={{ margin: "2em" }}>
+                                              <Grid container>
+                                                <Grid item xs={12} md={6}>
+                                                  <TextField size="small" name="name" id="name" onChange={handleChange} label="Nombres" variant="outlined" className={classes.fieldmodalcrear} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                  <TextField size="small" name="lastname" id="lastname" onChange={handleChange} label="Apellidos" variant="outlined" className={classes.fieldmodalcrear} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                  <TextField size="small" name="identi" id="identi" onChange={handleChange} label="Identifiación" variant="outlined" className={classes.fieldmodalcrear} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                  <TextField size="small" name="RA" id="RA" onChange={handleChange} label="Rol asociado" variant="outlined" className={classes.fieldmodalcrear} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                  <TextField size="small" name="state" id="state" onChange={handleChange} label="Estado" variant="outlined" className={classes.fieldmodalcrear} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                  <TextField size="small" name="contrasena" id="contrasena" onChange={handleChange} label="Contraseña" variant="outlined" className={classes.fieldmodalcrear} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                  <TextField size="small" name="phone" id="phone" onChange={handleChange} label="Teléfono" variant="outlined" className={classes.fieldmodalcrear} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                  <TextField size="small" name="mail" id="mail" onChange={handleChange} label="Correo electrónico" variant="outlined" className={classes.fieldmodalcrear} />
+                                                </Grid>
+                                              </Grid>
+                                            </form>
+                                          </DialogContent>
+                                          <Grid container style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                            <Button variant="contained" color="primary" onClick={() => inserter()} autoFocus style={{ margin: "2em", backgroundColor: "green" }}>
+                                              Aceptar
+                                            </Button>
+                                            <Button variant="outlined" onClick={handleClose2} color="primary" style={{ margin: "2em", color: "green", borderColor: "green" }}>
+                                              Cancelar
+                                            </Button>
+                                          </Grid>
+                                        </Dialog>
+
+
                                       </IconButton>
                                       <IconButton>
                                         <DeleteIcon fontSize="small" onClick={() => eliminar(usuario)} />
@@ -267,48 +342,48 @@ export default function Contenido() {
             </Grid>
 
             <Grid item xs={12}>
-                    <form className={classes.modalcrear} noValidate autoComplete="off" style={{ margin: "2em"}}>
-                      <Grid container>
-                        <Grid item xs={12} >
-                          <TextField size="small" id="Nombres" label="Nombres" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em"}}/>
-                        </Grid>
-                        <Grid item xs={12} >
-                          <TextField size="small" id="Apellidos" label="Apellidos" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em"}}/>
-                        </Grid>
-                        <Grid item xs={12} >
-                          <TextField size="small" id="Identificación (C.C)" label="Identificación (C.C)" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em"}}/>
-                        </Grid>
-                        <Grid item xs={12} >
-                          <TextField size="small" id="Rol asociado" label="Rol asociado" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em"}}/>
-                        </Grid>
-                        <Grid item xs={12} >
-                          <TextField size="small" id="Estado" label="Estado" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em"}}/>
-                        </Grid>
-                        <Grid item xs={12} >
-                          <TextField size="small" id="Contraseña" label="Contraseña" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em"}}/>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField size="small" id="Teléfono" label="Teléfono" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em"}}/>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField size="small" id="Correo electrónico" label="Correo electrónico" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em"}}/>
-                        </Grid>
-                      </Grid>
-                    </form>
-                  <Grid container style={{ display: "flex", alignItems: "center", justifyContent: "center"}}>
-                  <Grid item xs={12} md={6}>
-                      
-                  <Button variant="contained"  size="small" color="primary"  style={{ backgroundColor: "green"}}>
-                        Aceptar
-                      </Button>
+              <form className={classes.modalcrear} noValidate autoComplete="off" style={{ margin: "2em" }}>
+                <Grid container>
+                  <Grid item xs={12} >
+                    <TextField size="small" name="name" id="name" label="Nombres" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em" }} />
                   </Grid>
-                  <Grid item xs={12} md={6}>
-                      <Button variant="outlined" size="small" onClick={handleClose} color="primary" style={{ marginLeft: "5px", color:"green", borderColor:"green"}}>
-                        Cancelar
-                      </Button>
-                      
+                  <Grid item xs={12} >
+                    <TextField size="small" name="lastname" id="lastname" label="Apellidos" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em" }} />
                   </Grid>
+                  <Grid item xs={12} >
+                    <TextField size="small" name="identi" id="identi" label="Identificación" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em" }} />
                   </Grid>
+                  <Grid item xs={12} >
+                    <TextField size="small" name="RA" id="RA" label="Rol asociado" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em" }} />
+                  </Grid>
+                  <Grid item xs={12} >
+                    <TextField size="small" name="state" id="state" label="Estado" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em" }} />
+                  </Grid>
+                  <Grid item xs={12} >
+                    <TextField size="small" name="contrasena" id="contrasena" label="Contraseña" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em" }} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField size="small" name="phone" id="phone" label="Teléfono" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em" }} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField size="small" name="mail" id="mail" label="Correo electrónico" variant="outlined" className={classes.fieldmodalcrear} style={{ fontSize: "1px", marginTop: "20em" }} />
+                  </Grid>
+                </Grid>
+              </form>
+              <Grid container style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Grid item xs={12} md={6}>
+
+                  <Button variant="contained" size="small" color="primary" style={{ backgroundColor: "green" }}>
+                    Aceptar
+                  </Button>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Button variant="outlined" size="small" onClick={handleClose} color="primary" style={{ marginLeft: "5px", color: "green", borderColor: "green" }}>
+                    Cancelar
+                  </Button>
+
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
